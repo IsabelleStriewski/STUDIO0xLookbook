@@ -184,20 +184,31 @@ archiveItems.forEach(item => {
     imageObserver.observe(item);
 });
 /* ==========================================
-   4. HAMBURGER MENU (MOBILE)
+   4. MOBILE MENU OVERLAY
    ========================================== */
 const hamburger = document.getElementById('hamburger');
-const navLinksMobile = document.getElementById('nav-links');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileMenuLinks = document.getElementById('mobile-menu-links');
 
-if (hamburger && navLinksMobile) {
+// Nav-Links aus der Navbar ins Overlay kopieren
+if (hamburger && mobileMenu && mobileMenuLinks) {
+    const navLinks = document.querySelectorAll('.nav-links li');
+    navLinks.forEach(li => {
+        const clone = li.cloneNode(true);
+        mobileMenuLinks.appendChild(clone);
+    });
+
     hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navLinksMobile.classList.toggle('open');
+        mobileMenu.classList.add('open');
+        document.body.style.overflow = 'hidden';
     });
-    navLinksMobile.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('open');
-            navLinksMobile.classList.remove('open');
-        });
-    });
+
+    const closeMenu = () => {
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMenu);
+    mobileMenuLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 }
