@@ -510,13 +510,17 @@ body {
 
 @media (max-width: 900px) {
 
+    /* CURSOR weg */
+    html { cursor: auto; }
+
     /* NAVBAR */
     .navbar { padding: 1.2rem 1.5rem; }
     .logo { font-size: 1rem; }
     .hamburger { display: flex; }
 
+    /* Nav-Links versteckt, öffnet sich per Hamburger */
     .nav-links {
-        display: none;
+        display: none !important;
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
         background: rgba(248, 248, 248, 0.97);
@@ -528,7 +532,7 @@ body {
         z-index: 1050;
         list-style: none;
     }
-    .nav-links.open { display: flex; }
+    .nav-links.open { display: flex !important; }
     .nav-links a { font-size: 1.1rem; letter-spacing: 3px; }
 
     /* STARTSEITE */
