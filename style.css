@@ -1,0 +1,498 @@
+/* ==========================================
+   STUDIO 0x - MAIN STYLESHEET
+   ========================================== */
+
+/* --- 1. GRUNDEINSTELLUNGEN --- */
+:root {
+    --bg-color: #f8f8f8;
+    --text-color: #1a1a1a;
+    --accent-color: #036a7c;  
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    cursor: none; 
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden; 
+}
+
+/* --- 2. NAVIGATION (Sticky) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    background: rgba(248, 248, 248, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.logo a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a.active {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.nav-links a.active::after {
+    content: "•";
+    display: block;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 0.5;
+    margin-top: 2px;
+}
+
+/* --- 3. STARTSEITE (INDEX) --- */
+
+.titel {
+    padding: 180px 4rem 40px;
+    animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+
+.titel h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    line-height: 0.9;
+    text-transform: uppercase;
+}
+
+.index-intro {
+    padding: 0 4rem 60px;
+    animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) both;
+    animation-delay: 0.2s;
+}
+
+.scroll-indicator {
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) both;
+    animation-delay: 0.8s;
+}
+
+.scroll-indicator span {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-color); 
+}
+
+.scroll-indicator .line {
+    width: 60px;
+    height: 1px;
+    background: rgba(26, 26, 26, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-indicator .line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color); 
+    animation: scrollLineHorizontal 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+.lookbook-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 250px;
+    gap: 30px;
+    padding: 100px 4rem 4rem 4rem;
+}
+
+.lookbook-item {
+    position: relative;
+    overflow: hidden;
+    background-color: #eee;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+
+.lookbook-item:nth-child(1) { animation-delay: 0.1s; }
+.lookbook-item:nth-child(2) { animation-delay: 0.2s; }
+.lookbook-item:nth-child(3) { animation-delay: 0.3s; }
+.lookbook-item:nth-child(4) { animation-delay: 0.4s; }
+.lookbook-item:nth-child(5) { animation-delay: 0.5s; }
+.lookbook-item:nth-child(6) { animation-delay: 0.6s; }
+
+.lookbook-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.lookbook-item:hover img {
+    transform: scale(1.1);
+}
+
+.item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: transparent; 
+    pointer-events: none;
+    z-index: 5; 
+}
+
+.item-overlay span {
+    background-color: white;
+    color: #1a1a1a;
+    padding: 8px 15px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+.lookbook-item:hover .item-overlay,
+.idea-side:hover .item-overlay,
+.split-image-container:hover .item-overlay,
+.about-header-image:hover .item-overlay {
+    opacity: 1;
+}
+
+.item-wide { grid-column: span 2; }
+.item-tall { grid-row: span 2; }
+.item-extra-tall { grid-row: span 3; }
+
+.lookbook-item.shift-up { 
+    height: calc(100% + 60px) !important; 
+    animation: fadeUpShift 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important; 
+    display: block; 
+}
+.lookbook-item.shift-up img { height: 100%; object-fit: cover; }
+
+
+/* --- 4. FIX FÜR UNTERSEITEN (Process, Idea, About) --- */
+
+.process-layout, 
+.idea-layout,
+.content-page.split-layout { 
+    display: flex;
+    padding-top: 280px !important; 
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: transparent; 
+}
+
+.about-layout {
+    display: flex;
+    padding-top: 220px !important; 
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: transparent;
+    flex-direction: column; 
+}
+
+.idea-layout {
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.left-side, 
+.idea-side,
+.split-image-container,
+.about-header-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.idea-side,
+.split-image-container {
+    margin-top: -80px; 
+    height: calc(100vh - 200px) !important; 
+}
+
+.left-side img, 
+.idea-side img, 
+.split-image-container img, 
+.about-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease; 
+}
+
+.idea-side:hover img,
+.split-image-container:hover img,
+.about-header-image:hover img {
+    transform: scale(1.05);
+}
+
+
+/* --- 5. TEXT-STYLES UNTERSEITEN --- */
+
+.split-text-container {
+    width: 40%;
+    padding: 40px 80px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    margin-left: -10%;
+    z-index: 2;
+    animation: slideInRight 1.2s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+
+.idea-center-text {
+    width: 38%;
+    margin-left: -8%;
+    margin-right: -2%;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    z-index: 10;
+    padding: 60px;
+    animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+
+.left-img { width: 55%; z-index: 1; }
+.right-img { width: 15%; z-index: 1; }
+
+.idea-side img {
+    position: absolute;
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+.left-img img { left: 0; }
+.right-img img { right: 0; }
+
+.about-header-image {
+    width: 100%;
+    height: 50vh !important; 
+}
+.about-text-overlap {
+    width: 80%;
+    max-width: 1000px;
+    align-self: center;
+    margin-top: -15vh;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 80px 60px;
+    z-index: 10;
+    animation: fadeUp 1s cubic-bezier(0.2, 1, 0.3, 1) both;
+    margin-bottom: 80px;
+}
+
+.manifesto-grid { display: flex; gap: 40px; margin-top: 40px; }
+.manifesto-item { flex: 1; }
+
+
+/* --- 6. DAS RAW ARCHIVE (Scattered Grid) --- */
+
+.archive-container {
+    position: relative;
+    width: 100%;
+    height: 250vh; /* Wird per JS überschrieben, falls mehr Bilder da sind */
+    padding-top: 140px;
+    background: var(--bg-color);
+}
+
+.archive-header {
+    position: absolute;
+    top: 160px;
+    left: 4rem;
+    z-index: 1;
+}
+
+.drag-instruction {
+    font-family: 'Fira Code', monospace;
+    color: var(--accent-color); 
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 15px;
+}
+
+.archive-item {
+    position: absolute;
+    width: 320px; 
+    background: #ffffff;
+    padding: 12px 12px 45px 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    
+    transition: top 0.4s cubic-bezier(0.2, 1, 0.3, 1), 
+                left 0.4s cubic-bezier(0.2, 1, 0.3, 1), 
+                transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), 
+                width 0.4s cubic-bezier(0.2, 1, 0.3, 1), 
+                box-shadow 0.4s ease, filter 0.4s ease,
+                opacity 1s ease-out; /* NEU FÜR DEN SCROLL-EFFEKT */
+                
+    cursor: grab; 
+    
+    /* NEU FÜR DEN SCROLL-EFFEKT: Bilder starten unsichtbar! */
+    opacity: 0;
+}
+
+/* NEU FÜR DEN SCROLL-EFFEKT: Das Skript schaltet diese Klasse ein */
+.archive-item.visible {
+    opacity: 1;
+}
+
+.archive-item img {
+    width: 100%;
+    height: auto;
+    filter: grayscale(40%) contrast(1.1); 
+    transition: filter 0.4s ease;
+    pointer-events: none; 
+}
+
+.archive-item:hover img {
+    filter: grayscale(0%) contrast(1);
+}
+
+.archive-item:active {
+    cursor: grabbing;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.raw-label {
+    position: absolute;
+    bottom: 12px;
+    left: 15px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    color: #888; 
+    font-weight: 600;
+}
+
+#archive-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(248, 248, 248, 0.7); 
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    z-index: 99990;
+    cursor: zoom-out;
+}
+
+.archive-item.enlarged {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg) !important;
+    width: 80vw !important;
+    max-width: 900px;
+    z-index: 99999 !important;
+    cursor: zoom-out !important;
+    background: white; 
+    padding: 20px 20px 60px 20px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+}
+
+.archive-item.enlarged img {
+    filter: grayscale(0%) contrast(1);
+}
+
+
+/* --- 7. EXTRAS (Cursor & Animationen) --- */
+
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100000; 
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.cursor-dot { width: 6px; height: 6px; }
+.cursor-outline { width: 35px; height: 35px; background: transparent; border: 1px solid var(--accent-color); }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUpShift {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(-60px); } 
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scrollLineHorizontal {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+}
+
+.tech-zero { font-family: monospace; font-size: 0.9em; }
+
+@media (max-width: 900px) {
+    .lookbook-grid { grid-template-columns: 1fr; padding: 60px 20px 40px; }
+    .titel h1 { font-size: 3rem; }
+    .process-layout, .idea-layout { flex-direction: column; padding-top: 140px !important; }
+    .split-text-container, .idea-center-text, .about-text-overlap { width: 100%; margin: 0; padding: 40px 20px; }
+    
+    .left-side, .idea-side, .split-image-container { height: 40vh !important; width: 100%; margin-top: 0; }
+    
+    .idea-side img { position: relative; width: 100%; }
+    .manifesto-grid { flex-direction: column; gap: 20px; }
+    
+    .scroll-indicator { margin-top: 40px; margin-bottom: 40px; }
+    
+    .archive-item { width: 250px; }
+    .archive-item.enlarged { width: 95vw !important; }
+}

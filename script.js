@@ -1,0 +1,185 @@
+/* ==========================================
+   1. CUSTOM CURSOR
+   ========================================== */
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
+
+let isHovering = false; 
+
+window.addEventListener("mousemove", function (e) {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    cursorDot.style.transform = `translate(${posX}px, ${posY}px) translate(-50%, -50%)`;
+
+    cursorOutline.animate({
+        transform: `translate(${posX}px, ${posY}px) translate(-50%, -50%) ${isHovering ? 'scale(1.5)' : 'scale(1)'}`
+    }, { 
+        duration: 150, 
+        fill: "forwards",
+        easing: "ease-out" 
+    });
+});
+
+const links = document.querySelectorAll("a, .lookbook-item, .archive-item, h1");
+
+links.forEach(link => {
+    link.addEventListener("mouseenter", () => {
+        isHovering = true; 
+        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+        cursorOutline.style.backgroundColor = accentColor;
+        cursorOutline.style.opacity = "0.2"; 
+        cursorOutline.style.borderColor = "transparent"; 
+    });
+    link.addEventListener("mouseleave", () => {
+        isHovering = false; 
+        cursorOutline.style.backgroundColor = "transparent";
+        cursorOutline.style.opacity = "1"; 
+        cursorOutline.style.borderColor = "var(--accent-color)";
+    });
+});
+
+/* ==========================================
+   2. RAW ARCHIVE: PURE RANDOM SCATTER & ZOOM LOGIC
+   ========================================== */
+const archiveItems = document.querySelectorAll('.archive-item');
+const archiveContainer = document.querySelector('.archive-container');
+const overlay = document.getElementById('archive-overlay');
+
+let highestZ = 10; 
+let selectedItem = null; 
+
+// Container-Höhe dynamisch anpassen (Jetzt viel dichter!)
+let totalHeight = 200; 
+if (archiveContainer && archiveItems.length > 0) {
+    // Vorher * 20, jetzt * 12. Die Seite wird kürzer, die Bilder ballen sich! (8-15 pro Viewport)
+    totalHeight = 120 + (archiveItems.length * 12); 
+    archiveContainer.style.height = `${totalHeight}vh`;
+}
+
+// Bilder ABSOLUT ZUFÄLLIG verteilen
+archiveItems.forEach((item) => {
+    const randomX = Math.floor(Math.random() * 70) + 5; 
+    
+    // Startet bei 10vh (ganz oben!) und verteilt sich auf den engeren Raum
+    const randomY = Math.floor(Math.random() * (totalHeight - 50)) + 10; 
+    
+    const randomRot = Math.floor(Math.random() * 40) - 20; 
+
+    item.dataset.origRot = randomRot;
+    item.style.left = `${randomX}%`;
+    item.style.top = `${randomY}vh`; 
+    item.style.transform = `rotate(${randomRot}deg)`;
+
+    let isDragging = false;
+    let hasMoved = false; 
+    let startX, startY, initialLeft, initialTop;
+
+    item.addEventListener('mousedown', (e) => {
+        if(item.classList.contains('enlarged')) return; 
+        
+        isDragging = true;
+        hasMoved = false; 
+        highestZ++;
+        item.style.zIndex = highestZ;
+        
+        item.style.transform = `scale(1.05) rotate(0deg)`;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        if (item.style.left.includes('%') || item.style.top.includes('vh')) {
+            const rect = item.getBoundingClientRect();
+            const containerRect = document.querySelector('.archive-container').getBoundingClientRect();
+            initialLeft = rect.left - containerRect.left;
+            initialTop = rect.top - containerRect.top;
+            item.style.left = `${initialLeft}px`;
+            item.style.top = `${initialTop}px`;
+        } else {
+            initialLeft = parseFloat(item.style.left);
+            initialTop = parseFloat(item.style.top);
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        hasMoved = true; 
+        
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        
+        item.style.left = `${initialLeft + dx}px`;
+        item.style.top = `${initialTop + dy}px`;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        if (hasMoved) {
+            const dropRot = Math.floor(Math.random() * 10) - 5; 
+            item.style.transform = `rotate(${dropRot}deg)`;
+            item.dataset.origRot = dropRot; 
+            selectedItem = item; 
+        }
+    });
+    
+    item.addEventListener('click', (e) => {
+        if (!hasMoved) {
+            if (item.classList.contains('enlarged')) {
+                item.classList.remove('enlarged');
+                overlay.style.display = 'none';
+                item.style.transform = `rotate(${item.dataset.origRot}deg)`;
+            } else {
+                if (selectedItem !== item) {
+                    highestZ++;
+                    item.style.zIndex = highestZ;
+                    selectedItem = item;
+                    const dropRot = Math.floor(Math.random() * 10) - 5; 
+                    item.style.transform = `rotate(${dropRot}deg)`;
+                    item.dataset.origRot = dropRot;
+                } 
+                else {
+                    highestZ++;
+                    item.style.zIndex = highestZ; 
+                    item.classList.add('enlarged');
+                    overlay.style.display = 'block';
+                }
+            }
+        }
+    });
+});
+
+if (overlay) {
+    overlay.addEventListener('click', () => {
+        archiveItems.forEach(item => {
+            if (item.classList.contains('enlarged')) {
+                item.classList.remove('enlarged');
+                item.style.transform = `rotate(${item.dataset.origRot}deg)`;
+            }
+        });
+        overlay.style.display = 'none';
+    });
+}
+
+/* ==========================================
+   3. SCROLL REVEAL FÜR PERFORMANCE
+   ========================================== */
+const observerOptions = {
+    root: null,
+    rootMargin: '100px', 
+    threshold: 0.1 
+};
+
+const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+archiveItems.forEach(item => {
+    imageObserver.observe(item);
+});

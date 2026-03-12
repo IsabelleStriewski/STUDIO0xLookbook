@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO 0x — README</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8f8f8;
+            --text: #1a1a1a;
+            --accent: #036a7c;
+            --accent-light: rgba(3, 106, 124, 0.08);
+            --muted: #888;
+            --border: rgba(26,26,26,0.1);
+            --glass: rgba(255,255,255,0.85);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* NOISE OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.8rem 4rem;
+            background: rgba(248,248,248,0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -1px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo span {
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+
+        .nav-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 4px 12px;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding-top: 80px;
+        }
+
+        .hero-left {
+            padding: 10vh 4rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 7vw, 7rem);
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.3s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            max-width: 380px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.5s forwards;
+        }
+
+        .hero-meta {
+            margin-top: 3rem;
+            display: flex;
+            gap: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.7s forwards;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+        }
+
+        .meta-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+            background: #e8e8e8;
+        }
+
+        .hero-right-inner {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .hero-img-top {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #036a7c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Decorative grid pattern */
+        .hero-img-top::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .hero-code-block {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            padding: 3rem;
+            line-height: 2;
+            z-index: 1;
+            position: relative;
+        }
+
+        .code-accent { color: #5ecfde; }
+        .code-string { color: #a8d8e0; }
+        .code-comment { color: rgba(255,255,255,0.25); }
+
+        .hero-img-bottom {
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-img-bottom::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -80px;
+            right: -80px;
+        }
+
+        .hero-img-bottom::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .big-stat {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.15);
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            line-height: 1;
+        }
+
+        .hero-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.7);
+            z-index: 1;
+        }
+
+        /* DIVIDER */
+        .divider {
+            width: 100%;
+            overflow: hidden;
+            padding: 4rem 4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 5rem 4rem;
+        }
+
+        .section-number {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 3rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* FEATURES GRID */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            background: var(--bg);
+            padding: 3rem 2.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: white;
+        }
+
+        .feature-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: rgba(26,26,26,0.07);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            margin-top: 1.2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+        }
+
+        /* TECH STACK */
+        .tech-section {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .tech-section .section-number { color: #5ecfde; }
+        .tech-section .section-title { color: white; }
+        .tech-section .section-subtitle { color: rgba(255,255,255,0.3); }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-item {
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 2rem;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .tech-item:hover {
+            border-color: rgba(3,106,124,0.4);
+            background: rgba(3,106,124,0.05);
+        }
+
+        .tech-icon {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .tech-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 0.4rem;
+        }
+
+        .tech-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.35);
+            line-height: 1.7;
+        }
+
+        /* PAGES SECTION */
+        .pages-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .pages-left {
+            padding-right: 5rem;
+        }
+
+        .pages-list {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .page-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: baseline;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: padding-left 0.3s ease;
+        }
+
+        .page-item:hover {
+            padding-left: 0.5rem;
+        }
+
+        .page-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .page-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .page-desc {
+            font-size: 0.78rem;
+            color: var(--muted);
+            grid-column: 2;
+            margin-top: -0.5rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .page-arrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            transition: color 0.3s, transform 0.3s;
+            grid-row: 1;
+        }
+
+        .page-item:hover .page-arrow {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .pages-right {
+            background: #1a1a1a;
+            padding: 5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pages-right::before {
+            content: 'STUDIO\A0x';
+            white-space: pre;
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.03);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            line-height: 1;
+            text-align: center;
+        }
+
+        .pages-right-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pages-right h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .file-tree {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 2.2;
+        }
+
+        .file-tree .file-dir { color: rgba(255,255,255,0.7); }
+        .file-tree .file-html { color: #5ecfde; }
+        .file-tree .file-css { color: #a8d8e0; }
+        .file-tree .file-js { color: rgba(3,106,124,0.9); }
+        .file-tree .file-img { color: rgba(255,255,255,0.25); }
+
+        /* SETUP SECTION */
+        .setup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: flex-start;
+        }
+
+        .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            line-height: 1;
+            color: rgba(26,26,26,0.08);
+            flex-shrink: 0;
+            width: 60px;
+        }
+
+        .step-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .step-content p {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 2px 8px;
+        }
+
+        .note-box {
+            border-left: 2px solid var(--accent);
+            padding: 1.5rem 2rem;
+            background: var(--accent-light);
+            margin-top: 3rem;
+        }
+
+        .note-box p {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .note-box strong {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ROADMAP */
+        .roadmap-track {
+            margin-top: 3rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .roadmap-track::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .roadmap-item {
+            position: relative;
+            padding: 0 0 3rem 3rem;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--muted);
+        }
+
+        .roadmap-item.done::before {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .roadmap-phase {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .roadmap-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .roadmap-desc {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            margin-left: 0.8rem;
+            vertical-align: middle;
+        }
+
+        .status-done { background: rgba(3,106,124,0.1); color: var(--accent); }
+        .status-wip { background: rgba(26,26,26,0.06); color: var(--muted); }
+
+        /* ABOUT SECTION */
+        .about-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-right-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .principle-item {
+            display: flex;
+            gap: 1.2rem;
+            align-items: baseline;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .principle-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+
+        .principle-text {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .palette-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.6rem;
+        }
+
+        .swatch {
+            aspect-ratio: 1 / 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0.8rem;
+        }
+
+        .swatch-hex {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.7);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .swatch-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .skill-bars {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .skill-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
+
+        .skill-pct {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+        }
+
+        .skill-track {
+            height: 2px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .skill-fill.animate {
+            transform: scaleX(1);
+        }
+
+        .about-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .about-quote em {
+            color: var(--accent);
+        }
+
+        .about-body {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1a1a1a;
+            padding: 5rem 4rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: end;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span { font-family: monospace; }
+
+        .footer-sub {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        .footer-copy {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2,1,0.3,1), transform 0.8s cubic-bezier(0.2,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* SCROLL PROGRESS */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 9998;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 1.5rem; }
+            section { padding: 3rem 1.5rem; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { height: 50vw; }
+            .hero-left { padding: 14vh 1.5rem 3rem; }
+            .hero-title { font-size: 3.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
+            .pages-layout { grid-template-columns: 1fr; }
+            .pages-right { display: none; }
+            .setup-grid { grid-template-columns: 1fr; }
+            .about-split { grid-template-columns: 1fr; }
+            footer { grid-template-columns: 1fr; }
+            .footer-right { text-align: left; }
+            .footer-links { align-items: flex-start; }
+            .divider { padding: 2rem 1.5rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+    <a class="logo" href="#">STUDIO<span>0x</span>LOOKBOOK</a>
+    <span class="nav-badge">README.md</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: 0;">
+    <div class="hero-left">
+        <p class="hero-eyebrow">// project documentation</p>
+        <h1 class="hero-title">Digital<br><em>Lookbook.</em></h1>
+        <p class="hero-desc" style="opacity:0;animation:fadeUp 0.8s 0.5s forwards;">
+            A fashion-forward digital editorial where rigid structure meets fluid aesthetics. Built with pure HTML, CSS & JavaScript — no frameworks, no shortcuts.
+        </p>
+        <div class="hero-meta">
+            <div class="meta-item">
+                <span class="meta-label">Type</span>
+                <span class="meta-value">Web Project</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Year</span>
+                <span class="meta-value">2025</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Stack</span>
+                <span class="meta-value">HTML · CSS · JS</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Pages</span>
+                <span class="meta-value">5 Views</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="hero-right-inner">
+            <div class="hero-img-top">
+                <div class="hero-code-block">
+                    <span class="code-comment">// the concept</span><br>
+                    <span class="code-accent">const</span> studio = {<br>
+                    &nbsp;&nbsp;aesthetic: <span class="code-string">'editorial'</span>,<br>
+                    &nbsp;&nbsp;typefaces: [<span class="code-string">'Playfair'</span>, <span class="code-string">'Fira Code'</span>],<br>
+                    &nbsp;&nbsp;palette: <span class="code-string">'#036a7c'</span>,<br>
+                    &nbsp;&nbsp;layout: <span class="code-string">'asymmetric grid'</span>,<br>
+                    &nbsp;&nbsp;philosophy: <span class="code-string">'less is more'</span><br>
+                    }
+                </div>
+            </div>
+            <div class="hero-img-bottom">
+                <span class="hero-label">Studio 0x — 2025</span>
+                <span class="big-stat">0x</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-label">01 — Features</span>
+    <div class="divider-line"></div>
+</div>
+
+<!-- FEATURES -->
+<section>
+    <p class="section-number reveal">01 / 05</p>
+    <h2 class="section-title reveal">What it does.</h2>
+    <p class="section-subtitle reveal">Core Interactions & Design Decisions</p>
+    
+    <div class="features-grid reveal">
+        <div class="feature-item">
+            <div class="feature-num">01</div>
+            <h3 class="feature-title">Editorial Grid</h3>
+            <p class="feature-desc">An asymmetric 4-column CSS Grid on the homepage. Images intentionally break the baseline to create visual tension — controlled chaos, like a printed magazine spread.</p>
+            <span class="feature-tag">CSS Grid</span>
+        </div>
+        <div class="feature-item">
+            <div class="feature-num">02</div>
+            <h3 class="feature-title">Raw Archive</h3>
+            <p class="feature-desc">A growing collection of photographs that load in batches of 8–15 as you scroll — no dump, just discovery. Full drag & drop logic written from scratch — two-click zoom system, z-index management, drop rotation.</p>
+            <span class="feature-tag">Vanilla JS</span>
+        </div>
+        <div class="feature-item">
+            <div class="feature-num">03</div>
+            <h3 class="feature-title">Frosted Glass UI</h3>
+            <p class="feature-desc">Text containers use <code>backdrop-filter: blur()</code> to float above imagery. Layers of transparency create a tactile, physical depth on a flat screen.</p>
+            <span class="feature-tag">CSS Effects</span>
+        </div>
+        <div class="feature-item">
+            <div class="feature-num">04</div>
+            <h3 class="feature-title">Custom Cursor</h3>
+            <p class="feature-desc">A dual-element cursor — a dot and a ring — that expands and fills solid petrol on hover over links, cards, and h1 headings. Smooth via the Web Animations API.</p>
+            <span class="feature-tag">Web Animations API</span>
+        </div>
+        <div class="feature-item">
+            <div class="feature-num">05</div>
+            <h3 class="feature-title">Scroll Animations</h3>
+            <p class="feature-desc">Staggered <code>fadeUp</code> keyframes across every page. Each element enters with a cubic-bezier spring — fast out, slow settle. No libraries needed.</p>
+            <span class="feature-tag">CSS Keyframes</span>
+        </div>
+        <div class="feature-item">
+            <div class="feature-num">06</div>
+            <h3 class="feature-title">Typography Clash</h3>
+            <p class="feature-desc">Playfair Display (emotion, editorial) paired with Fira Code (logic, system). One serif, one monospace. Two voices in constant dialogue across every page.</p>
+            <span class="feature-tag">Google Fonts</span>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-label">02 — Tech Stack</span>
+    <div class="divider-line"></div>
+</div>
+
+<!-- TECH STACK -->
+<section class="tech-section">
+    <p class="section-number reveal">02 / 05</p>
+    <h2 class="section-title reveal">The System.</h2>
+    <p class="section-subtitle reveal">Zero Frameworks — Pure Craft</p>
+
+    <div class="tech-grid reveal">
+        <div class="tech-item">
+            <div class="tech-icon">&lt;/&gt;</div>
+            <h4 class="tech-name">HTML5</h4>
+            <p class="tech-desc">Semantic structure, proper document flow. Five pages, zero div-soup.</p>
+        </div>
+        <div class="tech-item">
+            <div class="tech-icon">{}</div>
+            <h4 class="tech-name">CSS3</h4>
+            <p class="tech-desc">Custom properties, Grid, backdrop-filter, keyframes. No Tailwind, no Bootstrap.</p>
+        </div>
+        <div class="tech-item">
+            <div class="tech-icon">_js</div>
+            <h4 class="tech-name">Vanilla JS</h4>
+            <p class="tech-desc">Drag logic, cursor system, z-index stacking. Pure DOM manipulation.</p>
+        </div>
+        <div class="tech-item">
+            <div class="tech-icon">Aa</div>
+            <h4 class="tech-name">Google Fonts</h4>
+            <p class="tech-desc">Playfair Display · Inter · Fira Code. Three voices, one system.</p>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-label">03 — Structure</span>
+    <div class="divider-line"></div>
+</div>
+
+<!-- PAGES / STRUCTURE -->
+<section style="padding-left: 0; padding-right: 0; padding-top: 5rem; padding-bottom: 0;">
+    <div class="pages-layout">
+        <div class="pages-left" style="padding-left: 4rem;">
+            <p class="section-number reveal">03 / 05</p>
+            <h2 class="section-title reveal">The Pages.</h2>
+            <p class="section-subtitle reveal">Five Views, One Lookbook</p>
+            
+            <div class="pages-list reveal">
+                <div class="page-item">
+                    <span class="page-code">/index</span>
+                    <span class="page-name">Home</span>
+                    <span class="page-arrow">→</span>
+                    <span class="page-desc">Hero title, 4-col editorial grid, scroll indicator</span>
+                </div>
+                <div class="page-item">
+                    <span class="page-code">/idea</span>
+                    <span class="page-name">Vision</span>
+                    <span class="page-arrow">→</span>
+                    <span class="page-desc">Tri-column layout: image · text · image. Concept manifesto.</span>
+                </div>
+                <div class="page-item">
+                    <span class="page-code">/process</span>
+                    <span class="page-name">System</span>
+                    <span class="page-arrow">→</span>
+                    <span class="page-desc">Split layout. Design decisions explained in detail.</span>
+                </div>
+                <div class="page-item">
+                    <span class="page-code">/about</span>
+                    <span class="page-name">Studio</span>
+                    <span class="page-arrow">→</span>
+                    <span class="page-desc">Full-width hero image with overlapping glass card.</span>
+                </div>
+                <div class="page-item">
+                    <span class="page-code">/archive</span>
+                    <span class="page-name">Archive</span>
+                    <span class="page-arrow">→</span>
+                    <span class="page-desc">Draggable photos loading in batches as you scroll — scatter layout across a 250vh canvas.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pages-right">
+            <div class="pages-right-content">
+                <h3>File Structure.</h3>
+                <div class="file-tree">
+                    <span class="file-dir">studio-0x/</span><br>
+                    ├── <span class="file-html">index.html</span><br>
+                    ├── <span class="file-html">idea.html</span><br>
+                    ├── <span class="file-html">process.html</span><br>
+                    ├── <span class="file-html">about.html</span><br>
+                    ├── <span class="file-html">archive.html</span><br>
+                    ├── <span class="file-css">style.css</span><br>
+                    ├── <span class="file-js">script.js</span><br>
+                    └── <span class="file-dir">Fotos/</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file-img">hanen-souhail-*.jpg</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file-img">ryoji-iwata-*.jpg</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file-img">677.jpg</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="file-img">... +46 more</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal" style="padding-top: 5rem;">
+    <div class="divider-line"></div>
+    <span class="divider-label">04 — Setup</span>
+    <div class="divider-line"></div>
+</div>
+
+<!-- SETUP -->
+<section>
+    <p class="section-number reveal">04 / 05</p>
+    <h2 class="section-title reveal">Quick Start.</h2>
+    <p class="section-subtitle reveal">Running locally in 60 seconds</p>
+
+    <div class="setup-grid reveal">
+        <div class="step-list">
+            <div class="step">
+                <span class="step-num">01</span>
+                <div class="step-content">
+                    <h4>Clone the Repo</h4>
+                    <p>Download or clone the repository. All assets live in the <code>Fotos/</code> folder alongside the HTML files.</p>
+                </div>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <div class="step-content">
+                    <h4>No Build Step</h4>
+                    <p>No npm, no webpack, no bundler. This project runs entirely in the browser — zero dependencies to install.</p>
+                </div>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <div class="step-content">
+                    <h4>Open with Live Server</h4>
+                    <p>Use the VS Code <code>Live Server</code> extension or any local server. Opening <code>index.html</code> directly may block font requests in some browsers.</p>
+                </div>
+            </div>
+            <div class="step">
+                <span class="step-num">04</span>
+                <div class="step-content">
+                    <h4>Deploy via GitHub Pages</h4>
+                    <p>Push to GitHub, enable Pages under <em>Settings → Pages</em>, set source to <code>main</code> branch. Live in under a minute.</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="note-box">
+                <strong>// Image Credits</strong>
+                <p>Photos sourced via Unsplash. All photographers are credited inline per archive item (e.g., <code>#001 // HANEN SOUHAIL</code>). Please review Unsplash's license terms before redistributing.</p>
+            </div>
+            <div class="note-box" style="margin-top: 1rem;">
+                <strong>// File Paths on Windows vs. Unix</strong>
+                <p>A few image paths in <code>archive.html</code> use backslashes (<code>Fotos\</code>). These work on Windows but will break on macOS/Linux and GitHub Pages. Replace with forward slashes (<code>Fotos/</code>) before deploying.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal">
+    <div class="divider-line"></div>
+    <span class="divider-label">05 — About</span>
+    <div class="divider-line"></div>
+</div>
+
+<!-- ABOUT -->
+<section>
+    <p class="section-number reveal">05 / 05</p>
+    <h2 class="section-title reveal">The Studio.</h2>
+    <p class="section-subtitle reveal">Isabelle Striewski — Design & Development</p>
+
+    <div class="about-split reveal">
+        <div>
+            <p class="about-quote">
+                "The goal was to bridge the gap between <em>rigid data</em> and <em>fluid aesthetics.</em>"
+            </p>
+            <p class="about-body">
+                STUDIO 0x is a personal project exploring the intersection of editorial design and modern web interfaces. Every decision — from the asymmetric grid to the drag-and-drop archive — was intentional. No template, no UI kit, no AI-generated layout. Just a blank stylesheet and a vision.
+                <br><br>
+                The name carries a dual meaning: <em>Studio</em> as a creative space, <em>0x</em> as a hexadecimal prefix — the language of machines. Fashion meets code.
+            </p>
+        </div>
+        <div class="about-right-col">
+            <div class="principles-block">
+                <p class="section-number" style="margin-bottom: 1.2rem;">Design Principles.</p>
+                <div class="principle-item">
+                    <span class="principle-num">01</span>
+                    <span class="principle-text">Asymmetry over convention — break the grid to guide the eye.</span>
+                </div>
+                <div class="principle-item">
+                    <span class="principle-num">02</span>
+                    <span class="principle-text">Active whitespace — empty areas are deliberate, not lazy.</span>
+                </div>
+                <div class="principle-item">
+                    <span class="principle-num">03</span>
+                    <span class="principle-text">Layering for depth — glass over image, text over space.</span>
+                </div>
+                <div class="principle-item">
+                    <span class="principle-num">04</span>
+                    <span class="principle-text">Typographic tension — serif emotion vs. monospace logic.</span>
+                </div>
+            </div>
+
+            <div class="palette-block">
+                <p class="section-number" style="margin-top: 3rem; margin-bottom: 1.2rem;">Colour Palette.</p>
+                <div class="palette-row">
+                    <div class="swatch" style="background:#036a7c;">
+                        <span class="swatch-hex">#036a7c</span>
+                        <span class="swatch-name">Accent</span>
+                    </div>
+                    <div class="swatch" style="background:#1a1a1a;">
+                        <span class="swatch-hex" style="color:rgba(255,255,255,0.5)">#1a1a1a</span>
+                        <span class="swatch-name" style="color:rgba(255,255,255,0.35)">Ink</span>
+                    </div>
+                    <div class="swatch" style="background:#f8f8f8; border: 1px solid var(--border);">
+                        <span class="swatch-hex" style="color:#aaa">#f8f8f8</span>
+                        <span class="swatch-name" style="color:#bbb">Canvas</span>
+                    </div>
+                    <div class="swatch" style="background:#888888;">
+                        <span class="swatch-hex" style="color:rgba(255,255,255,0.5)">#888888</span>
+                        <span class="swatch-name" style="color:rgba(255,255,255,0.35)">Muted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <div class="footer-logo">STUDIO<span>0x</span></div>
+        <p class="footer-sub">Digital Lookbook — 2025</p>
+    </div>
+    <div class="footer-right">
+        <div class="footer-links">
+            <a href="#">GitHub Repository</a>
+            <a href="#">Live Demo</a>
+            <a href="#">Unsplash Credits</a>
+        </div>
+        <p class="footer-copy">Built with HTML · CSS · JS — No frameworks.</p>
+    </div>
+</footer>
+
+<script>
+    // SCROLL PROGRESS
+    const bar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        bar.style.width = pct + '%';
+    });
+
+    // REVEAL ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+
+</script>
+</body>
+</html>
