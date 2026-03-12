@@ -481,18 +481,57 @@ body {
 .tech-zero { font-family: monospace; font-size: 0.9em; }
 
 @media (max-width: 900px) {
-    .lookbook-grid { grid-template-columns: 1fr; padding: 60px 20px 40px; }
+
+    /* CURSOR auf Touch ausblenden */
+    html { cursor: auto; }
+    .cursor-dot, .cursor-outline { display: none; }
+
+    /* NAVBAR */
+    .navbar {
+        padding: 1.2rem 1.5rem;
+        gap: 1rem;
+    }
+    .logo { font-size: 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+    }
+
+    /* STARTSEITE */
+    .titel { padding: 120px 1.5rem 20px; }
     .titel h1 { font-size: 3rem; }
-    .process-layout, .idea-layout { flex-direction: column; padding-top: 140px !important; }
-    .split-text-container, .idea-center-text, .about-text-overlap { width: 100%; margin: 0; padding: 40px 20px; }
-    
-    .left-side, .idea-side, .split-image-container { height: 40vh !important; width: 100%; margin-top: 0; }
-    
-    .idea-side img { position: relative; width: 100%; }
-    .manifesto-grid { flex-direction: column; gap: 20px; }
-    
+    .index-intro { padding: 0 1.5rem 40px; }
     .scroll-indicator { margin-top: 40px; margin-bottom: 40px; }
-    
-    .archive-item { width: 250px; }
+
+    /* LOOKBOOK GRID */
+    .lookbook-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 200px;
+        gap: 10px;
+        padding: 20px 1.5rem 40px;
+    }
+    .item-wide { grid-column: span 2; }
+    .item-tall { grid-row: span 1; }
+    .lookbook-item.shift-up {
+        height: 200px !important;
+        transform: none !important;
+        animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
+    }
+
+    /* UNTERSEITEN */
+    .process-layout, .idea-layout { flex-direction: column; padding-top: 100px !important; }
+    .split-text-container, .idea-center-text { width: 100%; margin: 0; padding: 30px 1.5rem; }
+    .left-side, .idea-side, .split-image-container { height: 40vh !important; width: 100%; margin-top: 0; }
+    .idea-side img { position: relative; width: 100%; }
+    .right-img { display: none; }
+    .left-img { width: 100%; }
+    .manifesto-grid { flex-direction: column; gap: 20px; }
+    .about-layout { padding-top: 100px !important; }
+    .about-header-image { height: 35vh !important; }
+    .about-text-overlap { width: 95%; margin: -8vh auto 40px; padding: 30px 1.5rem; }
+
+    /* ARCHIVE */
+    .archive-item { width: 180px; }
     .archive-item.enlarged { width: 95vw !important; }
 }
