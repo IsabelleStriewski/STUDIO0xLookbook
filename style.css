@@ -514,25 +514,29 @@ body {
     html { cursor: auto; }
 
     /* NAVBAR */
-    .navbar { padding: 1.2rem 1.5rem; }
+    .navbar { padding: 1.2rem 1.5rem; z-index: 9998; }
     .logo { font-size: 1rem; }
-    .hamburger { display: flex; }
+    .hamburger { display: flex; position: relative; z-index: 9999; }
 
     /* Nav-Links versteckt, öffnet sich per Hamburger */
     .nav-links {
         display: none !important;
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: #f8f8f8;
+        background: rgb(248, 248, 248);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2.5rem;
         z-index: 9990;
         list-style: none;
+        padding: 0;
+        margin: 0;
     }
     .nav-links.open { display: flex !important; }
-    .nav-links a { font-size: 1.1rem; letter-spacing: 3px; }
+    .nav-links a { font-size: 1.1rem; letter-spacing: 3px; color: var(--text-color); }
 
     /* STARTSEITE */
     .titel { padding: 120px 1.5rem 20px; }
