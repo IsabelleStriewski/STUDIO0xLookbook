@@ -590,7 +590,7 @@ body {
         overflow: hidden;
     }
     .about-layout { padding-top: 80px !important; }
-    .split-image-container, .idea-side {
+    .split-image-container {
         margin-top: 0 !important;
         height: 100% !important;
     }
