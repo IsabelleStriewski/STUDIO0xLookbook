@@ -561,11 +561,13 @@ body {
     html { cursor: auto; }
     body { overflow-x: hidden; max-width: 100vw; }
 
+    /* --- NAVBAR --- */
     .navbar { padding: 1.2rem 1.5rem; }
     .logo { font-size: 1rem; }
     .hamburger { display: flex; }
     .nav-links { display: none !important; }
 
+    /* --- INDEX --- */
     .titel { padding: 120px 1.5rem 20px; }
     .titel h1 { font-size: 3rem; }
     .index-intro { padding: 0 1.5rem 40px; }
@@ -586,15 +588,15 @@ body {
     }
 
     /* --- PROCESS (split-layout): Bild oben, Text darunter --- */
-    .content-page.split-layout { 
-        padding-top: 80px !important;
+    .content-page.split-layout {
         flex-direction: column !important;
-        overflow: visible !important;
+        padding-top: 80px !important;
         min-height: auto !important;
+        overflow: visible !important;
     }
     .split-image-container {
         width: 100% !important;
-        height: 60vw !important;
+        height: 55vw !important;
         margin-top: 0 !important;
         flex-shrink: 0;
     }
@@ -602,57 +604,57 @@ body {
         width: 100% !important;
         margin-left: 0 !important;
         padding: 40px 1.5rem 60px !important;
+        backdrop-filter: none;
     }
 
-    /* --- IDEA (idea-layout): Desktop-Struktur beibehalten (Bild | Text) --- */
-    .idea-layout { 
-        padding-top: 80px !important;
-        flex-wrap: nowrap !important;
+    /* --- IDEA (idea-layout): Bild links, Text rechts – wie Desktop --- */
+    .idea-layout {
         flex-direction: row !important;
-        align-items: flex-start !important;
+        flex-wrap: nowrap !important;
+        padding-top: 80px !important;
+        min-height: auto !important;
         overflow: visible !important;
+        align-items: flex-start !important;
     }
-    .idea-layout .idea-side {
-        margin-top: 0 !important;
-        height: 75vw !important;
+    .idea-layout .left-img {
+        width: 45% !important;
         flex-shrink: 0 !important;
     }
-    .idea-layout .left-img { width: 45% !important; }
-    .idea-layout .right-img { display: none !important; }
-    .idea-center-text {
-        width: 62% !important;
-        margin-left: -7% !important;
-        margin-right: 0 !important;
-        margin-top: 20px !important;
-        padding: 20px 15px !important;
-        overflow: visible !important;
-    }
-    /* Inline-Schriftgrößen für idea.html auf Mobile überschreiben */
-    .idea-center-text h1 { font-size: 1.6rem !important; }
-    .idea-center-text h3 { font-size: 0.72rem !important; margin-bottom: 20px !important; }
-    .idea-center-text p  { font-size: 0.8rem !important; margin-bottom: 15px !important; }
-
-    .about-layout { padding-top: 80px !important; }
-    .split-image-container {
+    .idea-layout .idea-side {
+        height: 75vw !important;
         margin-top: 0 !important;
     }
+    .idea-layout .right-img {
+        display: none !important;
+    }
+    .idea-center-text {
+        width: 60% !important;
+        margin-left: -5% !important;
+        margin-right: 0 !important;
+        margin-top: 20px !important;
+        padding: 20px 14px !important;
+        font-size: 0.8rem;
+    }
+    /* Inline-Styles der idea.html überschreiben */
+    .idea-center-text [style*="font-size: 3.5rem"] { font-size: 1.5rem !important; }
+    .idea-center-text [style*="font-size: 1rem"] { font-size: 0.72rem !important; margin-bottom: 16px !important; }
+    .idea-center-text p { font-size: 0.78rem !important; margin-bottom: 12px !important; line-height: 1.5 !important; }
 
-    /* About: Overlap-Effekt erhalten */
+    /* --- ABOUT --- */
+    .about-layout { padding-top: 80px !important; }
     .about-header-image { height: 55vw !important; }
-    .about-text-overlap { 
+    .about-text-overlap {
         width: 90%;
         margin-top: -8vh;
         padding: 40px 30px;
     }
+    .manifesto-grid { flex-direction: column !important; gap: 20px; }
+    .manifesto-item { width: 100%; }
 
-    /* Archive: Items bleiben im Screen */
+    /* --- ARCHIVE --- */
     .archive-container { overflow: hidden; }
     .archive-item { width: 150px; }
     .archive-item.visible { opacity: 1; }
     .archive-item.landscape { width: 220px; }
     .archive-item.enlarged { width: 95vw !important; }
-    .manifesto-grid { flex-direction: column !important; gap: 20px; }
-    .manifesto-item { width: 100%; }
-    .right-img { display: none; }
-    .left-img { width: 100%; }
 }
