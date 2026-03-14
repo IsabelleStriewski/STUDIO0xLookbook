@@ -585,7 +585,7 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    .content-page.split-layout, .idea-layout { 
+    .content-page.split-layout { 
         padding-top: 80px !important;
         overflow: hidden;
     }
@@ -593,19 +593,6 @@ body {
     .split-image-container {
         margin-top: 0 !important;
         height: 100% !important;
-    }
-
-    /* Process/Vision: Bild volle Breite oben */
-    .split-image-container, .idea-side {
-        width: 100% !important;
-        height: 60vw !important;
-        margin-top: 0 !important;
-    }
-    .split-text-container, .idea-center-text {
-        width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding: 30px 1.5rem !important;
     }
 
     /* About: Overlap-Effekt erhalten */
