@@ -591,23 +591,36 @@ body {
         padding-top: 80px; 
     }
     .about-layout { padding-top: 80px; }
+
+    /* Process/Vision: Bild volle Breite oben */
+    .split-image-container, .idea-side {
+        width: 100% !important;
+        height: 60vw !important;
+        margin-top: 0 !important;
+    }
+    .split-text-container, .idea-center-text {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 30px 1.5rem !important;
+    }
+
+    /* About: Overlap-Effekt erhalten */
+    .about-header-image { height: 55vw !important; }
     .about-text-overlap { 
         width: 90%;
         margin-top: -8vh;
         padding: 40px 30px;
     }
 
+    /* Archive: Items bleiben im Screen */
     .archive-container { overflow-x: hidden; }
-    .archive-item { width: 160px; }
+    .archive-item { width: 150px; }
     .archive-item.visible { opacity: 1; }
-    .archive-item.landscape { width: 240px; }
+    .archive-item.landscape { width: 220px; }
     .archive-item.enlarged { width: 95vw !important; }
     .manifesto-grid { flex-direction: column; gap: 20px; }
     .manifesto-item { width: 100%; }
-    .archive-item.enlarged { width: 95vw !important; }
-
     .right-img { display: none; }
     .left-img { width: 100%; }
-    .manifesto-grid { flex-direction: column; gap: 20px; }
-    .manifesto-item { width: 100%; }
 }

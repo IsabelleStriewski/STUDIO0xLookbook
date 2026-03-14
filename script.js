@@ -69,13 +69,21 @@ if (archiveContainer && archiveItems.length > 0) {
 }
 
 // Bilder ABSOLUT ZUFÄLLIG verteilen
+const isMobile = window.innerWidth <= 900;
 archiveItems.forEach((item) => {
-    const randomX = Math.floor(Math.random() * 70) + 5; 
+    const itemWidth = isMobile ? 220 : 460;
+    const screenW = window.innerWidth;
+    const maxLeftPx = Math.max(0, screenW - itemWidth - 10);
+    const maxLeftPct = Math.floor((maxLeftPx / screenW) * 100);
+
+    const randomX = isMobile
+        ? Math.floor(Math.random() * maxLeftPct)
+        : Math.floor(Math.random() * 70) + 5;
     
-    // Startet bei 10vh (ganz oben!) und verteilt sich auf den engeren Raum
     const randomY = Math.floor(Math.random() * (totalHeight - 50)) + 10; 
-    
-    const randomRot = Math.floor(Math.random() * 40) - 20; 
+    const randomRot = isMobile
+        ? Math.floor(Math.random() * 20) - 10
+        : Math.floor(Math.random() * 40) - 20; 
 
     item.dataset.origRot = randomRot;
     item.style.left = `${randomX}%`;
