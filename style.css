@@ -585,9 +585,17 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    /* Nur Abstand oben reduzieren, Design sonst unangetastet */
-    .process-layout, .idea-layout, .content-page.split-layout { padding-top: 80px; }
+    /* Nur Abstand oben reduzieren + column layout, Design sonst unangetastet */
+    .content-page.split-layout, .idea-layout { 
+        flex-direction: column;
+        padding-top: 80px; 
+    }
     .about-layout { padding-top: 80px; }
+    .about-text-overlap { 
+        width: 90%;
+        margin-top: -8vh;
+        padding: 40px 30px;
+    }
 
     .archive-container { overflow-x: hidden; }
     .archive-item { width: 160px; }
