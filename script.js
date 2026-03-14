@@ -63,8 +63,7 @@ let selectedItem = null;
 // Container-Höhe dynamisch anpassen (Jetzt viel dichter!)
 let totalHeight = 200; 
 if (archiveContainer && archiveItems.length > 0) {
-    // Vorher * 20, jetzt * 12. Die Seite wird kürzer, die Bilder ballen sich! (8-15 pro Viewport)
-    totalHeight = 120 + (archiveItems.length * 12); 
+    totalHeight = 120 + (archiveItems.length * 20); 
     archiveContainer.style.height = `${totalHeight}vh`;
 }
 
