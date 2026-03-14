@@ -60,7 +60,11 @@ const overlay = document.getElementById('archive-overlay');
 let highestZ = 10; 
 let selectedItem = null; 
 
-// Container-Höhe dynamisch anpassen (Jetzt viel dichter!)
+// Scroll-Wiederherstellung deaktivieren und immer oben starten
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+// Container-Höhe dynamisch anpassen
 let totalHeight = 200; 
 if (archiveContainer && archiveItems.length > 0) {
     totalHeight = 120 + (archiveItems.length * 20); 
