@@ -586,9 +586,10 @@ body {
     }
 
     .content-page.split-layout, .idea-layout { 
-        padding-top: 80px; 
+        padding-top: 80px !important;
+        overflow: hidden;
     }
-    .about-layout { padding-top: 80px; }
+    .about-layout { padding-top: 80px !important; }
 
     /* Process/Vision: Bild volle Breite oben */
     .split-image-container, .idea-side {
