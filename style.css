@@ -583,7 +583,8 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    .process-layout, .idea-layout, .content-page.split-layout { flex-direction: column; padding-top: 80px !important; }
+    .process-layout, .idea-layout, .content-page.split-layout { flex-direction: column; padding-top: 80px !important; min-height: unset; }
+    section.content-page.split-layout { padding-top: 80px !important; }
     .split-text-container, .idea-center-text { width: 100%; margin: 0 !important; padding: 30px 1.5rem; backdrop-filter: none; background: white; }
     .left-side, .idea-side, .split-image-container { height: 50vw !important; min-height: 220px; width: 100%; margin-top: 0 !important; }
     .idea-side img { position: relative; width: 100%; }
@@ -595,5 +596,6 @@ body {
     .about-text-overlap { width: 95%; margin: 20px auto 40px; padding: 30px 1.5rem; }
 
     .archive-item { width: 180px; }
+    .archive-item.landscape { width: 260px; }
     .archive-item.enlarged { width: 95vw !important; }
 }
