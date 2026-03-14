@@ -4,15 +4,26 @@
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorOutline = document.querySelector(".cursor-outline");
 
-let isHovering = false; 
+let isHovering = false;
+let cursorVisible = false;
+
+// Cursor versteckt bis erste Mausbewegung
+if (cursorDot) cursorDot.style.opacity = '0';
+if (cursorOutline) cursorOutline.style.opacity = '0';
 
 window.addEventListener("mousemove", function (e) {
     const posX = e.clientX;
     const posY = e.clientY;
 
-    cursorDot.style.transform = `translate(${posX}px, ${posY}px) translate(-50%, -50%)`;
+    if (!cursorVisible) {
+        cursorVisible = true;
+        if (cursorDot) cursorDot.style.opacity = '1';
+        if (cursorOutline) cursorOutline.style.opacity = '1';
+    }
 
-    cursorOutline.animate({
+    if (cursorDot) cursorDot.style.transform = `translate(${posX}px, ${posY}px) translate(-50%, -50%)`;
+
+    if (cursorOutline) cursorOutline.animate({
         transform: `translate(${posX}px, ${posY}px) translate(-50%, -50%) ${isHovering ? 'scale(1.5)' : 'scale(1)'}`
     }, { 
         duration: 150, 
