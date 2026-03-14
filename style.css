@@ -585,9 +585,7 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    /* Nur Abstand oben reduzieren + column layout, Design sonst unangetastet */
     .content-page.split-layout, .idea-layout { 
-        flex-direction: column;
         padding-top: 80px; 
     }
     .about-layout { padding-top: 80px; }
@@ -614,12 +612,12 @@ body {
     }
 
     /* Archive: Items bleiben im Screen */
-    .archive-container { overflow-x: hidden; }
+    .archive-container { overflow: hidden; }
     .archive-item { width: 150px; }
     .archive-item.visible { opacity: 1; }
     .archive-item.landscape { width: 220px; }
     .archive-item.enlarged { width: 95vw !important; }
-    .manifesto-grid { flex-direction: column; gap: 20px; }
+    .manifesto-grid { flex-direction: column !important; gap: 20px; }
     .manifesto-item { width: 100%; }
     .right-img { display: none; }
     .left-img { width: 100%; }

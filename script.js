@@ -71,13 +71,12 @@ if (archiveContainer && archiveItems.length > 0) {
 // Bilder ABSOLUT ZUFÄLLIG verteilen
 const isMobile = window.innerWidth <= 900;
 archiveItems.forEach((item) => {
-    const itemWidth = isMobile ? 220 : 460;
+    const itemWidth = item.classList.contains('landscape') ? (isMobile ? 220 : 460) : (isMobile ? 150 : 320);
     const screenW = window.innerWidth;
-    const maxLeftPx = Math.max(0, screenW - itemWidth - 10);
-    const maxLeftPct = Math.floor((maxLeftPx / screenW) * 100);
+    const maxLeftPx = Math.max(0, screenW - itemWidth - 20);
 
     const randomX = isMobile
-        ? Math.floor(Math.random() * maxLeftPct)
+        ? Math.floor(Math.random() * maxLeftPx)
         : Math.floor(Math.random() * 70) + 5;
     
     const randomY = Math.floor(Math.random() * (totalHeight - 50)) + 10; 
@@ -86,7 +85,7 @@ archiveItems.forEach((item) => {
         : Math.floor(Math.random() * 40) - 20; 
 
     item.dataset.origRot = randomRot;
-    item.style.left = `${randomX}%`;
+    item.style.left = isMobile ? `${randomX}px` : `${randomX}%`;
     item.style.top = `${randomY}vh`; 
     item.style.transform = `rotate(${randomRot}deg)`;
 
