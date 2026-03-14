@@ -590,18 +590,20 @@ body {
         overflow: hidden;
     }
     .idea-layout { 
-        padding-top: 70px !important;
+        padding-top: 80px !important;
         flex-wrap: wrap;
     }
-    .idea-layout .left-img {
-        width: 100% !important;
-        height: 70vw !important;
+    .idea-layout .idea-side {
         margin-top: 0 !important;
+        height: 70vw !important;
     }
+    .idea-layout .left-img { width: 100% !important; }
     .idea-layout .right-img { display: none !important; }
     .idea-center-text {
         width: 85% !important;
-        margin: -15vw auto 40px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: -10vw !important;
         padding: 30px 1.5rem !important;
     }
     .about-layout { padding-top: 80px !important; }
