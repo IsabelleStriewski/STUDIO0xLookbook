@@ -384,6 +384,10 @@ body {
     opacity: 1;
 }
 
+.archive-item.landscape {
+    width: 460px;
+}
+
 .archive-item img {
     width: 100%;
     height: auto;
@@ -579,16 +583,16 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    .process-layout, .idea-layout { flex-direction: column; padding-top: 100px !important; }
-    .split-text-container, .idea-center-text { width: 100%; margin: 0; padding: 30px 1.5rem; }
-    .left-side, .idea-side, .split-image-container { height: 40vh !important; width: 100%; margin-top: 0; }
+    .process-layout, .idea-layout, .content-page.split-layout { flex-direction: column; padding-top: 80px !important; }
+    .split-text-container, .idea-center-text { width: 100%; margin: 0 !important; padding: 30px 1.5rem; backdrop-filter: none; background: white; }
+    .left-side, .idea-side, .split-image-container { height: 50vw !important; min-height: 220px; width: 100%; margin-top: 0 !important; }
     .idea-side img { position: relative; width: 100%; }
     .right-img { display: none; }
     .left-img { width: 100%; }
     .manifesto-grid { flex-direction: column; gap: 20px; }
-    .about-layout { padding-top: 100px !important; }
-    .about-header-image { height: 35vh !important; }
-    .about-text-overlap { width: 95%; margin: -8vh auto 40px; padding: 30px 1.5rem; }
+    .about-layout { padding-top: 80px !important; flex-direction: column; }
+    .about-header-image { height: 50vw !important; min-height: 220px; margin-top: 0 !important; }
+    .about-text-overlap { width: 95%; margin: 20px auto 40px; padding: 30px 1.5rem; }
 
     .archive-item { width: 180px; }
     .archive-item.enlarged { width: 95vw !important; }

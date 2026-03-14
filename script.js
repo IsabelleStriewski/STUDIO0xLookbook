@@ -212,3 +212,16 @@ if (hamburger && mobileMenu && mobileMenuLinks) {
     if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMenu);
     mobileMenuLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 }
+
+/* ==========================================
+   5. ARCHIVE: LANDSCAPE DETECTION
+   ========================================== */
+document.querySelectorAll('.archive-item img').forEach(img => {
+    const check = () => {
+        if (img.naturalWidth > img.naturalHeight) {
+            img.closest('.archive-item').classList.add('landscape');
+        }
+    };
+    if (img.complete) check();
+    else img.addEventListener('load', check);
+});
