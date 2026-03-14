@@ -224,7 +224,7 @@ body {
 .idea-layout,
 .content-page.split-layout { 
     display: flex;
-    padding-top: 280px !important; 
+    padding-top: 280px; 
     min-height: 100vh;
     box-sizing: border-box;
     background: transparent; 
@@ -232,7 +232,7 @@ body {
 
 .about-layout {
     display: flex;
-    padding-top: 220px !important; 
+    padding-top: 220px; 
     min-height: 100vh;
     box-sizing: border-box;
     background: transparent;
@@ -583,16 +583,27 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
-    .process-layout, .idea-layout, .content-page.split-layout { flex-direction: column; padding-top: 80px !important; min-height: unset; }
-    section.content-page.split-layout { padding-top: 80px !important; }
-    .split-text-container, .idea-center-text { width: 100%; margin: 0 !important; padding: 30px 1.5rem; backdrop-filter: none; background: white; }
-    .left-side, .idea-side, .split-image-container { height: 50vw !important; min-height: 220px; width: 100%; margin-top: 0 !important; }
-    .idea-side img { position: relative; width: 100%; }
-    .right-img { display: none; }
-    .left-img { width: 100%; }
-    .manifesto-grid { flex-direction: column; gap: 20px; }
-    .about-layout { padding-top: 80px !important; flex-direction: column; }
-    .about-header-image { height: 50vw !important; min-height: 220px; margin-top: 0 !important; }
+    .process-layout, .idea-layout, .content-page.split-layout { 
+        flex-direction: column; 
+        padding-top: 70px; 
+        min-height: unset;
+        overflow-x: hidden;
+    }
+    .about-layout { padding-top: 70px; flex-direction: column; min-height: unset; }
+    .split-text-container, .idea-center-text { 
+        width: 100%; 
+        margin: 0 !important; 
+        padding: 30px 1.5rem; 
+        backdrop-filter: none; 
+        background: white; 
+    }
+    .left-side, .idea-side, .split-image-container { 
+        height: 50vw !important; 
+        min-height: 200px; 
+        width: 100% !important; 
+        margin-top: 0 !important; 
+    }
+    .about-header-image { height: 50vw !important; min-height: 200px; margin-top: 0 !important; }
     .about-text-overlap { width: 95%; margin: 20px auto 40px; padding: 30px 1.5rem; }
 
     .archive-item { width: 180px; }
