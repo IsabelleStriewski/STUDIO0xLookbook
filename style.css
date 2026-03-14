@@ -585,31 +585,56 @@ body {
         animation: fadeUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) both !important;
     }
 
+    /* --- PROCESS (split-layout): Bild oben, Text darunter --- */
     .content-page.split-layout { 
         padding-top: 80px !important;
-        overflow: hidden;
+        flex-direction: column !important;
+        overflow: visible !important;
+        min-height: auto !important;
     }
+    .split-image-container {
+        width: 100% !important;
+        height: 60vw !important;
+        margin-top: 0 !important;
+        flex-shrink: 0;
+    }
+    .split-text-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 40px 1.5rem 60px !important;
+    }
+
+    /* --- IDEA (idea-layout): Desktop-Struktur beibehalten (Bild | Text) --- */
     .idea-layout { 
         padding-top: 80px !important;
-        flex-wrap: wrap;
+        flex-wrap: nowrap !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        overflow: visible !important;
     }
     .idea-layout .idea-side {
         margin-top: 0 !important;
-        height: 70vw !important;
+        height: 75vw !important;
+        flex-shrink: 0 !important;
     }
-    .idea-layout .left-img { width: 100% !important; }
+    .idea-layout .left-img { width: 45% !important; }
     .idea-layout .right-img { display: none !important; }
     .idea-center-text {
-        width: 85% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        margin-top: -10vw !important;
-        padding: 30px 1.5rem !important;
+        width: 62% !important;
+        margin-left: -7% !important;
+        margin-right: 0 !important;
+        margin-top: 20px !important;
+        padding: 20px 15px !important;
+        overflow: visible !important;
     }
+    /* Inline-Schriftgrößen für idea.html auf Mobile überschreiben */
+    .idea-center-text h1 { font-size: 1.6rem !important; }
+    .idea-center-text h3 { font-size: 0.72rem !important; margin-bottom: 20px !important; }
+    .idea-center-text p  { font-size: 0.8rem !important; margin-bottom: 15px !important; }
+
     .about-layout { padding-top: 80px !important; }
     .split-image-container {
         margin-top: 0 !important;
-        height: 100% !important;
     }
 
     /* About: Overlap-Effekt erhalten */
