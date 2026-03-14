@@ -224,7 +224,7 @@ body {
 .idea-layout,
 .content-page.split-layout { 
     display: flex;
-    padding-top: 120px; 
+    padding-top: 280px; 
     min-height: 100vh;
     box-sizing: border-box;
     background: transparent; 
@@ -232,7 +232,7 @@ body {
 
 .about-layout {
     display: flex;
-    padding-top: 120px; 
+    padding-top: 220px; 
     min-height: 100vh;
     box-sizing: border-box;
     background: transparent;
@@ -255,8 +255,8 @@ body {
 
 .idea-side,
 .split-image-container {
-    margin-top: 0; 
-    height: calc(100vh - 120px) !important; 
+    margin-top: -80px; 
+    height: calc(100vh - 200px) !important; 
 }
 
 .left-side img, 
@@ -313,7 +313,7 @@ body {
 
 .about-header-image {
     width: 100%;
-    height: calc(100vh - 120px) !important; 
+    height: 50vh !important; 
 }
 .about-text-overlap {
     width: 80%;
